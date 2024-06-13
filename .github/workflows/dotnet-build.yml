@@ -1,29 +1,27 @@
 # name: The name of the work flow. Badges will use this name
 name: github-actions .NET
 
-# on: Define when and how the action is initiated
 on:
-push:
-branches: [ "main" ]
-pull_request:
-branches: [ "main" ]
-schedule:
-- cron: '0 0 * * 1'
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches: 
+      - main
+  schedule:
+    - cron: '0 0 * * 1'
 
-# jobs: Describes the various tasks and stages of each task. Individual stages produce GitHub Actions
 jobs:
-build:
+  build:
+    runs-on: ubuntu-latest
 
-runs-on: ubuntu-latest
-
-# steps: Workflow composition
-steps:
-- uses: actions/checkout@v4
-- name: Setup .NET
-  uses: actions/setup-dotnet@v4
-  with:
-    dotnet-version: 8.0.x
-- name: Restore dependencies
-  run: dotnet restore **/*.csproj
-- name: Build
-  run: dotnet build **/*.csproj --no-restore
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore **/*.csproj
+      - name: Build
+        run: dotnet build **/*.csproj --no-restore
